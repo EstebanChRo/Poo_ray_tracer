@@ -1,0 +1,22 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Lancer imgcompare.Main avec arguments",
+            "request": "launch",
+            "mainClass": "imgcompare.Main",
+            "args": [
+                "${workspaceFolder}/imgcompare/src/main/resources/test_compare_image1.png",
+                "${workspaceFolder}/imgcompare/src/main/resources/test_compare_image2.png"
+            ],
+            "projectName": "imgcompare"
+        }
+    ]
+}
