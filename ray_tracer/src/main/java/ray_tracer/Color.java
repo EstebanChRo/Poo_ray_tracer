@@ -19,4 +19,9 @@ public class Color extends AbstractVec3 {
     public Color multiplicationParScalaire(double scalaire){
         return new Color(this.x * scalaire, this.y * scalaire, this.z * scalaire);
     }
+
+    public Color produitDeSchur(Color other){
+        return new Color(this.x * other.x, this.y * other.y, this.z * other.z);
+    }
+
 }
