@@ -11,13 +11,13 @@ public class Color extends AbstractVec3 {
         return new Color(this.x + v.x, this.y + v.y, this.z + v.z);
     }
 
-    public Color soustraction (AbstractVec3 other){
+    public Color subtraction (AbstractVec3 other){
         Color v = (Color) other;
         return new Color(this.x - v.x, this.y - v.y, this.z - v.z);
     }
 
-    public Color multiplicationParScalaire(double scalaire){
-        return new Color(this.x * scalaire, this.y * scalaire, this.z * scalaire);
+    public Color multiplicationByScalar(double scalar){
+        return new Color(this.x * scalar, this.y * scalar, this.z * scalar);
     }
 
     public Color produitDeSchur(Color other){

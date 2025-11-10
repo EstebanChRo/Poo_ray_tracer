@@ -13,8 +13,8 @@ public abstract class AbstractVec3 {
 
     public abstract AbstractVec3 addition(AbstractVec3 other);
 
-    public abstract AbstractVec3 soustraction(AbstractVec3 other);
+    public abstract AbstractVec3 subtraction(AbstractVec3 other);
 
-    public abstract AbstractVec3 multiplicationParScalaire(double scalaire);
+    public abstract AbstractVec3 multiplicationByScalar(double scalar);
 
 }

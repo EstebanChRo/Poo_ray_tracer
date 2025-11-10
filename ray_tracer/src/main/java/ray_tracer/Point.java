@@ -11,12 +11,12 @@ public class Point extends AbstractVec3 {
         return new Point(this.x + v.x, this.y + v.y, this.z + v.z);
     }
 
-    public Point soustraction (AbstractVec3 other){
+    public Point subtraction (AbstractVec3 other){
         Point v = (Point) other;
         return new Point(this.x - v.x, this.y - v.y, this.z - v.z);
     }
 
-    public Point multiplicationParScalaire(double scalaire){
-        return new Point(this.x * scalaire, this.y * scalaire, this.z * scalaire);
+    public Point multiplicationByScalar(double scalar){
+        return new Point(this.x * scalar, this.y * scalar, this.z * scalar);
     }
 }
