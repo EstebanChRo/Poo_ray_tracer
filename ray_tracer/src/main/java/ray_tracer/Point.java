@@ -6,17 +6,23 @@ public class Point extends AbstractVec3 {
         super(x,y,z);
     }
 
-    public Point addition(AbstractVec3 other){
-        Point v = (Point) other;
+    public Point add(AbstractVec3 other){
+        if (!(other instanceof Vector)) {
+            throw new IllegalArgumentException("A Point can only be added to a Vector (translation).");
+        }
+        Vector v = (Vector) other;
         return new Point(this.x + v.x, this.y + v.y, this.z + v.z);
     }
 
-    public Point subtraction (AbstractVec3 other){
-        Point v = (Point) other;
-        return new Point(this.x - v.x, this.y - v.y, this.z - v.z);
+    public Point subtract (AbstractVec3 other){
+        if (!(other instanceof Point)) {
+            throw new IllegalArgumentException("A Point can only be subtracted from another Point.");
+        }
+        Point p = (Point) other;
+        return new Point(this.x - p.x, this.y - p.y, this.z - p.z);
     }
 
-    public Point multiplicationByScalar(double scalar){
+    public Point multiplyByScalar(double scalar){
         return new Point(this.x * scalar, this.y * scalar, this.z * scalar);
     }
 }

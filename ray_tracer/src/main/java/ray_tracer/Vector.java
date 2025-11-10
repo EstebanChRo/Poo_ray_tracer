@@ -6,17 +6,17 @@ public class Vector extends AbstractVec3 {
         super(x,y,z);
     }
 
-    public Vector addition(AbstractVec3 other){
+    public Vector add(AbstractVec3 other){
         Vector v = (Vector) other;
         return new Vector(this.x + v.x, this.y + v.y, this.z + v.z);
     }
 
-    public Vector subtraction (AbstractVec3 other){
+    public Vector subtract (AbstractVec3 other){
         Vector v = (Vector) other;
         return new Vector(this.x - v.x, this.y - v.y, this.z - v.z);
     }
 
-    public Vector multiplicationByScalar(double scalar){
+    public Vector multiplyByScalar(double scalar){
         return new Vector(this.x * scalar, this.y * scalar, this.z * scalar);
     }
 

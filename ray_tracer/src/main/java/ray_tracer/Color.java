@@ -6,17 +6,17 @@ public class Color extends AbstractVec3 {
         super(x,y,z);
     }
 
-    public Color addition(AbstractVec3 other){
+    public Color add(AbstractVec3 other){
         Color v = (Color) other;
         return new Color(this.x + v.x, this.y + v.y, this.z + v.z);
     }
 
-    public Color subtraction (AbstractVec3 other){
+    public Color subtract (AbstractVec3 other){
         Color v = (Color) other;
         return new Color(this.x - v.x, this.y - v.y, this.z - v.z);
     }
 
-    public Color multiplicationByScalar(double scalar){
+    public Color multiplyByScalar(double scalar){
         return new Color(this.x * scalar, this.y * scalar, this.z * scalar);
     }
 

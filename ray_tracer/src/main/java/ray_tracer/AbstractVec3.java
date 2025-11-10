@@ -11,10 +11,10 @@ public abstract class AbstractVec3 {
         this.z = z;
     }
 
-    public abstract AbstractVec3 addition(AbstractVec3 other);
+    public abstract AbstractVec3 add(AbstractVec3 other);
 
-    public abstract AbstractVec3 subtraction(AbstractVec3 other);
+    public abstract AbstractVec3 subtract(AbstractVec3 other);
 
-    public abstract AbstractVec3 multiplicationByScalar(double scalar);
+    public abstract AbstractVec3 multiplyByScalar(double scalar);
 
 }
