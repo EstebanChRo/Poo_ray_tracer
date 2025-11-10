@@ -6,17 +6,33 @@ public class Vector extends AbstractVec3 {
         super(x,y,z);
     }
 
-    public Vector Addition(AbstractVec3 other){
+    public Vector addition(AbstractVec3 other){
         Vector v = (Vector) other;
         return new Vector(this.x + v.x, this.y + v.y, this.z + v.z);
     }
 
-    public Vector Soustraction (AbstractVec3 other){
+    public Vector soustraction (AbstractVec3 other){
         Vector v = (Vector) other;
         return new Vector(this.x - v.x, this.y - v.y, this.z - v.z);
     }
 
-    public Vector MultiplicationParScalaire(double scalaire){
+    public Vector multiplicationParScalaire(double scalaire){
         return new Vector(this.x * scalaire, this.y * scalaire, this.z * scalaire);
+    }
+
+    public double produitScalaire(Vector other){
+        return this.x * other.x + this.y * other.y + this.z * other.z;
+    }
+
+    public Vector produitVectoriel(Vector other){
+        return new Vector(this.y * other.z - this.z * other.y, this.z * other.x - this.x * other.z , this.x + other.y - this.y * other.x);
+    }
+
+    public double longueur(){
+        return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+    }
+
+    public Vector normalisation(){
+        return new Vector(this.x / longueur(), this.y / longueur(), this.z / longueur());
     }
 }

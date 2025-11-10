@@ -6,17 +6,17 @@ public class Point extends AbstractVec3 {
         super(x,y,z);
     }
 
-    public Point Addition(AbstractVec3 other){
+    public Point addition(AbstractVec3 other){
         Point v = (Point) other;
         return new Point(this.x + v.x, this.y + v.y, this.z + v.z);
     }
 
-    public Point Soustraction (AbstractVec3 other){
+    public Point soustraction (AbstractVec3 other){
         Point v = (Point) other;
         return new Point(this.x - v.x, this.y - v.y, this.z - v.z);
     }
 
-    public Point MultiplicationParScalaire(double scalaire){
+    public Point multiplicationParScalaire(double scalaire){
         return new Point(this.x * scalaire, this.y * scalaire, this.z * scalaire);
     }
 }
