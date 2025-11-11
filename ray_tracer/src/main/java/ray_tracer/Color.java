@@ -10,6 +10,10 @@ public class Color extends AbstractVec3 {
         );
     }
 
+    public Color(){
+        super(0.0,0.0,0.0);
+    }
+
     public Color add(AbstractVec3 other){
         if (!(other instanceof Color)) {
             throw new IllegalArgumentException("A Color can only be added to another Color.");
