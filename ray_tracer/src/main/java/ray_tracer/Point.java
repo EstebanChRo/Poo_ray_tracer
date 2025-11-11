@@ -35,6 +35,6 @@ public class Point extends AbstractVec3 {
             return false;
         }
         Point other = (Point) obj;
-        return Double.compare(other.x, x) == 0 && Double.compare(other.y, y) == 0 && Double.compare(other.z, z) == 0;
+        return almostEqual(other.x, x) && almostEqual(other.y, y) && almostEqual(other.z, z);
     }
 }

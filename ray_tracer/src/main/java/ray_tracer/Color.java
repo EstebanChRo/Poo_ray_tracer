@@ -62,6 +62,16 @@ public class Color extends AbstractVec3 {
             return false;
         }
         Color other = (Color) obj;
-        return Double.compare(other.x, x) == 0 && Double.compare(other.y, y) == 0 && Double.compare(other.z, z) == 0;
+        return almostEqual(other.x, x) && almostEqual(other.y, y) && almostEqual(other.z, z);
+    }
+
+    public int toRGB(){
+        int red = (int) Math.round(x * 255);
+        int green = (int) Math.round(y * 255);
+        int blue = (int) Math.round(z * 255);
+        return (
+            ((red & 0xff) << 16)
+            + ((green & 0xff) << 8)
+            + (blue & 0xff));
     }
 }
