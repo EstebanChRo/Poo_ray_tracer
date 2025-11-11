@@ -48,4 +48,16 @@ public class Color extends AbstractVec3 {
         }
         return new Color(this.x * other.x, this.y * other.y, this.z * other.z);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Color other = (Color) obj;
+        return Double.compare(other.x, x) == 0 && Double.compare(other.y, y) == 0 && Double.compare(other.z, z) == 0;
+    }
 }
