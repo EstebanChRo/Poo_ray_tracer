@@ -3,25 +3,49 @@ package ray_tracer;
 public class Color extends AbstractVec3 {
 
     public Color(double x, double y, double z){
-        super(x,y,z);
+        super(
+            Math.max(0.0, Math.min(1.0, x)),
+            Math.max(0.0, Math.min(1.0, y)),
+            Math.max(0.0, Math.min(1.0, z))
+        );
     }
 
     public Color add(AbstractVec3 other){
+        if (!(other instanceof Color)) {
+            throw new IllegalArgumentException("A Color can only be added to another Color.");
+        }
         Color v = (Color) other;
-        return new Color(this.x + v.x, this.y + v.y, this.z + v.z);
+        return new Color(
+            Math.min(1.0, this.x + v.x),
+            Math.min(1.0, this.y + v.y),
+            Math.min(1.0, this.z + v.z)
+        );
     }
 
     public Color subtract (AbstractVec3 other){
+        if (!(other instanceof Color)) {
+            throw new IllegalArgumentException("A Color can only be subtracted from another Color.");
+        }
         Color v = (Color) other;
-        return new Color(this.x - v.x, this.y - v.y, this.z - v.z);
+        return new Color(
+            Math.max(0.0, this.x - v.x),
+            Math.max(0.0, this.y - v.y),
+            Math.max(0.0, this.z - v.z)
+        );
     }
 
     public Color multiplyByScalar(double scalar){
-        return new Color(this.x * scalar, this.y * scalar, this.z * scalar);
+        return new Color(
+            Math.max(0.0, Math.min(1.0, this.x * scalar)),
+            Math.max(0.0, Math.min(1.0, this.y * scalar)),
+            Math.max(0.0, Math.min(1.0, this.z * scalar))
+        );
     }
 
     public Color produitDeSchur(Color other){
+        if (other == null) {
+            throw new IllegalArgumentException("The argument cannot be null.");
+        }
         return new Color(this.x * other.x, this.y * other.y, this.z * other.z);
     }
-
 }
