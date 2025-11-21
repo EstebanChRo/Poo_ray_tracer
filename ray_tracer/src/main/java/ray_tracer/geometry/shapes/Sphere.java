@@ -25,4 +25,16 @@ public class Sphere extends Shape {
         this.radius = radius;
     }
 
+    public Color getDiffuse() {
+        return diffuse;
+    }
+    public void setDiffuse(Color diffuse) {
+        this.diffuse = diffuse;
+    }
+    public Color getSpecular() {
+        return specular;
+    }
+    public void setSpecular(Color specular) {
+        this.specular = specular;
+    }
 }

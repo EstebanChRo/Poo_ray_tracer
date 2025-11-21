@@ -1,6 +1,6 @@
 package ray_tracer.geometry.shapes;
 
-import java.util.Vector;
+import ray_tracer.geometry.Vector;
 
 import ray_tracer.geometry.Point;
 import ray_tracer.imaging.Color;
@@ -8,6 +8,8 @@ import ray_tracer.imaging.Color;
 public class Plane extends Shape {
     private Point point;
     private Vector normal;
+    private Color diffuse;
+    private Color specular;
     
     public Plane(Color diffuse, Color specular, Point point, Vector normal) {
         super(diffuse, specular);
@@ -18,18 +20,26 @@ public class Plane extends Shape {
     public Point getPoint() {
         return point;
     }
-
     public void setPoint(Point point) {
         this.point = point;
     }
-
     public Vector getNormal() {
         return normal;
     }
-
     public void setNormal(Vector normal) {
         this.normal = normal;
     }
 
-    
+    public Color getDiffuse() {
+        return diffuse;
+    }
+    public void setDiffuse(Color diffuse) {
+        this.diffuse = diffuse;
+    }
+    public Color getSpecular() {
+        return specular;
+    }
+    public void setSpecular(Color specular) {
+        this.specular = specular;
+    }
 }
