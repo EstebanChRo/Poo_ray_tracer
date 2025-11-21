@@ -1,4 +1,4 @@
-package ray_tracer;
+package ray_tracer.geometry;
 
 public abstract class AbstractVec3 {
     protected double x;
