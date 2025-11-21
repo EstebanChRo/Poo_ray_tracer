@@ -1,5 +1,26 @@
 package ray_tracer.geometry.shapes;
 
-public class Shape {
-// Il faudra stocker les couleurs diffuse et specular dans les objets concernés (les Shape ). N'oubliez pas que cette information peut être définie plusieurs fois, alors récupérez la bonne !
+import ray_tracer.imaging.Color;
+
+public abstract class Shape {
+    protected Color diffuse;
+    protected Color specular;
+
+    public Shape(Color diffuse, Color specular) {
+        this.diffuse = diffuse;
+        this.specular = specular;
+    }
+
+    public Color getDiffuse() {
+        return diffuse;
+    }
+    public void setDiffuse(Color diffuse) {
+        this.diffuse = diffuse;
+    }
+    public Color getSpecular() {
+        return specular;
+    }
+    public void setSpecular(Color specular) {
+        this.specular = specular;
+    }
 }
