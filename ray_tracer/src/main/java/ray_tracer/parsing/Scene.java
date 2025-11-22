@@ -17,17 +17,15 @@ public class Scene {
     private List<AbstractLight> lights = new ArrayList<>();
     private List<Shape> shapes = new ArrayList<>();
 
-    
-
-    public Scene(int width, int height, Camera camera, String output, Color ambient, List<AbstractLight> lights,
-            List<Shape> shapes) {
-        this.width = width;
-        this.height = height;
-        this.camera = camera;
-        this.output = output;
-        this.ambient = ambient;
-        this.lights = lights;
-        this.shapes = shapes;
+    public Scene() {
+        // Valeurs pas défaut
+        this.width = 0;
+        this.height = 0;
+        this.output = "output.png";
+        this.ambient = new Color(0, 0, 0);
+        this.lights = new ArrayList<>();
+        this.shapes = new ArrayList<>();
+        this.camera = null;
     }
 
     public int getWidth() {
