@@ -16,4 +16,78 @@ public class Scene {
 
     private List<AbstractLight> lights = new ArrayList<>();
     private List<Shape> shapes = new ArrayList<>();
+
+    
+
+    public Scene(int width, int height, Camera camera, String output, Color ambient, List<AbstractLight> lights,
+            List<Shape> shapes) {
+        this.width = width;
+        this.height = height;
+        this.camera = camera;
+        this.output = output;
+        this.ambient = ambient;
+        this.lights = lights;
+        this.shapes = shapes;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public Camera getCamera() {
+        return camera;
+    }
+
+    public void setCamera(Camera camera) {
+        this.camera = camera;
+    }
+
+    public String getOutput() {
+        return output;
+    }
+
+    public void setOutput(String output) {
+        this.output = output;
+    }
+
+    public Color getAmbient() {
+        return ambient;
+    }
+
+    public void setAmbient(Color ambient) {
+        this.ambient = ambient;
+    }
+
+    public List<AbstractLight> getLights() {
+        return lights;
+    }
+
+    public List<Shape> getShapes() {
+        return shapes;
+    }
+
+    public void setSize(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    public void addLight(AbstractLight light) {
+        this.lights.add(light);
+    }
+
+    public void addShape(Shape shape) {
+        this.shapes.add(shape);
+    }
 }
