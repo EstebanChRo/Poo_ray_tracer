@@ -20,6 +20,29 @@ public class SceneFileParser {
     private Color currentSpecular;
     private List<Point> vertices = new ArrayList<>();
 
+    public SceneFileParser() {
+        this.scene = new Scene();
+        this.currentDiffuse = new Color(0, 0, 0);
+        this.currentSpecular = new Color(0, 0, 0);
+        this.vertices = new ArrayList<>();
+    }
+
+    public Scene getScene() {
+        return scene;
+    }
+
+    public Color getCurrentDiffuse() {
+        return currentDiffuse;
+    }
+
+    public Color getCurrentSpecular() {
+        return currentSpecular;
+    }
+
+    public List<Point> getVertices() {
+        return vertices;
+    }
+
     public Scene parse(String filePath) {
         Scene scene = new Scene();
         try (FileReader file = new FileReader(filePath)){
@@ -92,7 +115,7 @@ public class SceneFileParser {
     }
 
     private void parseOutput(String[] line){
-        if (line.length < 3) {
+        if (line.length < 2) {
             throw new IllegalArgumentException("Format invalide pour 'output'. Attendu : outpout <output.png>");
         }
         String output = line[1];
