@@ -91,7 +91,7 @@ public class SceneFileParser {
                         parseShpere(parts);
                         break;
                     default:
-                        throw new IllegalArgumentException("Ligne inconnue dans le fichier de scène: " + parts[0]);
+                        throw new IllegalArgumentException("Unknown line in scene file: " + parts[0]);
                 }
             }
         } catch (IOException e) {
@@ -103,12 +103,12 @@ public class SceneFileParser {
 
     private void parseSize(String[] line){
         if (line.length < 3) {
-            throw new IllegalArgumentException("Format invalide pour 'size'. Attendu : size <width> <height>");
+            throw new IllegalArgumentException("Invalid format for 'size'. Expected: size <width> <height>");
         }
         int width = Integer.parseInt(line[1]);
         int height = Integer.parseInt(line[2]);
         if (width <= 0 || height <= 0) {
-            throw new IllegalArgumentException("La largeur et la hauteur doivent être des entiers positifs.");
+            throw new IllegalArgumentException("Width and height must be positive integers.");
         }
         scene.setWidth(width);
         scene.setHeight(height);
@@ -116,7 +116,7 @@ public class SceneFileParser {
 
     private void parseOutput(String[] line){
         if (line.length < 2) {
-            throw new IllegalArgumentException("Format invalide pour 'output'. Attendu : outpout <output.png>");
+            throw new IllegalArgumentException("Invalid format for 'output'. Expected: output <output.png>");
         }
         String output = line[1];
         scene.setOutput(output);
@@ -124,7 +124,7 @@ public class SceneFileParser {
 
     private void parseCamera(String[] line){
         if (line.length < 11) {
-            throw new IllegalArgumentException("Format invalide pour 'camera'. Attendu : camera <x> <y> <z> <u> <v> <w> <m> <n> <o> <fov>");
+            throw new IllegalArgumentException("Invalid format for 'camera'. Expected: camera <x> <y> <z> <u> <v> <w> <m> <n> <o> <fov>");
         }
         double lookFromX = Double.parseDouble(line[1]);
         double lookFromY = Double.parseDouble(line[2]);
@@ -140,7 +140,7 @@ public class SceneFileParser {
         Vector up = new Vector(upM, upN, upO);
         double fov = Double.parseDouble(line[10]);
         if (fov <= 0 || fov >= 180) {
-            throw new IllegalArgumentException("Le champ de vision (fov) doit être compris entre 0 et 180 degrés.");
+            throw new IllegalArgumentException("Field of view (fov) must be between 0 and 180 degrees.");
         }
         Camera camera = new Camera(lookFrom, lookAt, up, fov);
         scene.setCamera(camera);
@@ -148,13 +148,13 @@ public class SceneFileParser {
 
     private void parseAmbient(String[] line){
         if (line.length < 4) {
-            throw new IllegalArgumentException("Format invalide pour 'ambient'. Attendu : ambient <r> <g> <b>");
+            throw new IllegalArgumentException("Invalid format for 'ambient'. Expected: ambient <r> <g> <b>");
         }
         double ambientR = Double.parseDouble(line[1]);
         double ambientG = Double.parseDouble(line[2]);
         double ambientB = Double.parseDouble(line[3]);
         if (ambientR < 0 || ambientR > 1 || ambientG < 0 || ambientG > 1 || ambientB < 0 || ambientB > 1) {
-            throw new IllegalArgumentException("Les composantes RGB de la couleur ambiante doivent être comprises entre 0 et 1.");
+            throw new IllegalArgumentException("RGB components of ambient color must be between 0 and 1.");
         }
         Color ambient = new Color(ambientR, ambientG, ambientB);
         scene.setAmbient(ambient);
@@ -162,7 +162,7 @@ public class SceneFileParser {
 
     private void parseDirectionalLight(String[] line){
         if (line.length < 7) {
-            throw new IllegalArgumentException("Format invalide pour 'directional'. Attendu : directional <x> <y> <z> <r> <g> <b>");
+            throw new IllegalArgumentException("Invalid format for 'directional'. Expected: directional <x> <y> <z> <r> <g> <b>");
         }
         double directionX = Double.parseDouble(line[1]);
         double directionY = Double.parseDouble(line[2]);
@@ -172,7 +172,7 @@ public class SceneFileParser {
         double colorG = Double.parseDouble(line[5]);
         double colorB = Double.parseDouble(line[6]);
         if (colorR < 0 || colorR > 1 || colorG < 0 || colorG > 1 || colorB < 0 || colorB > 1) {
-            throw new IllegalArgumentException("Les composantes RGB de la lumière directionnelle doivent être comprises entre 0 et 1.");
+            throw new IllegalArgumentException("RGB components of directional light must be between 0 and 1.");
         }
         Color color = new Color(colorR, colorG, colorB);
         directionalLight directionalLight =  new directionalLight(color, direction);
@@ -181,7 +181,7 @@ public class SceneFileParser {
 
     private void parsePointLight(String[] line){
         if (line.length < 7) {
-            throw new IllegalArgumentException("Format invalide pour 'point'. Attendu : point <x> <y> <z> <r> <g> <b>");
+            throw new IllegalArgumentException("Invalid format for 'point'. Expected: point <x> <y> <z> <r> <g> <b>");
         }
         double originX = Double.parseDouble(line[1]);
         double originY = Double.parseDouble(line[2]);
@@ -191,7 +191,7 @@ public class SceneFileParser {
         double colorG = Double.parseDouble(line[5]);
         double colorB = Double.parseDouble(line[6]);
         if (colorR < 0 || colorR > 1 || colorG < 0 || colorG > 1 || colorB < 0 || colorB > 1) {
-            throw new IllegalArgumentException("Les composantes RGB de la lumière ponctuelle doivent être comprises entre 0 et 1.");
+            throw new IllegalArgumentException("RGB components of point light must be between 0 and 1.");
         }
         Color color = new Color(colorR, colorG, colorB);
         PointLight pointLight =  new PointLight(color, origin);
@@ -200,13 +200,13 @@ public class SceneFileParser {
 
     private void parseDiffuse(String[] line){
         if (line.length < 4) {
-            throw new IllegalArgumentException("Format invalide pour 'diffuse'. Attendu : diffuse <r> <g> <b>");
+            throw new IllegalArgumentException("Invalid format for 'diffuse'. Expected: diffuse <r> <g> <b>");
         }
         double diffuseR = Double.parseDouble(line[1]);
         double diffuseG = Double.parseDouble(line[2]);
         double diffuseB = Double.parseDouble(line[3]);
         if (diffuseR < 0 || diffuseR > 1 || diffuseG < 0 || diffuseG > 1 || diffuseB < 0 || diffuseB > 1) {
-            throw new IllegalArgumentException("Les composantes RGB de la couleur diffuse doivent être comprises entre 0 et 1.");
+            throw new IllegalArgumentException("RGB components of diffuse color must be between 0 and 1.");
         }
         Color diffuse = new Color(diffuseR, diffuseG, diffuseB);
         this.currentDiffuse = diffuse;
@@ -214,13 +214,13 @@ public class SceneFileParser {
 
     private void parseSpecular(String[] line){
         if (line.length < 4) {
-            throw new IllegalArgumentException("Format invalide pour 'specular'. Attendu : specular <r> <g> <b>");
+            throw new IllegalArgumentException("Invalid format for 'specular'. Expected: specular <r> <g> <b>");
         }
         double specularR = Double.parseDouble(line[1]);
         double specularG = Double.parseDouble(line[2]);
         double specularB = Double.parseDouble(line[3]);
         if (specularR < 0 || specularR > 1 || specularG < 0 || specularG > 1 || specularB < 0 || specularB > 1) {
-            throw new IllegalArgumentException("Les composantes RGB de la couleur spéculaire doivent être comprises entre 0 et 1.");
+            throw new IllegalArgumentException("RGB components of specular color must be between 0 and 1.");
         }
         Color specular = new Color(specularR, specularG, specularB);
         this.currentSpecular = specular;
@@ -228,7 +228,7 @@ public class SceneFileParser {
 
     private void parseMaxverts(String[] line){
         if (line.length < 2) {
-            throw new IllegalArgumentException("Format invalide pour 'maxverts'. Attendu : maxverts <nombre>");
+            throw new IllegalArgumentException("Invalid format for 'maxverts'. Expected: maxverts <number>");
         }
         int maxverts = Integer.parseInt(line[1]);
         // à implémenter plus tard si besoin
@@ -236,7 +236,7 @@ public class SceneFileParser {
 
     private void parseVertex(String[] line){
         if (line.length < 4) {
-            throw new IllegalArgumentException("Format invalide pour 'vertex'. Attendu : vertex <x> <y> <z>");
+            throw new IllegalArgumentException("Invalid format for 'vertex'. Expected: vertex <x> <y> <z>");
         }
         double vertexX = Double.parseDouble(line[1]);
         double vertexY = Double.parseDouble(line[2]);
@@ -247,7 +247,7 @@ public class SceneFileParser {
 
     private void parseTriangle(String[] parts) {
         if (parts.length < 4) {
-            throw new IllegalArgumentException("Format invalide pour 'tri'. Attendu : tri <a> <b> <c>");
+            throw new IllegalArgumentException("Invalid format for 'tri'. Expected: tri <a> <b> <c>");
         }
         int a = Integer.parseInt(parts[1]);
         int b = Integer.parseInt(parts[2]);
@@ -258,7 +258,7 @@ public class SceneFileParser {
 
     private void parseShpere(String[] line){
         if (line.length < 5) {
-            throw new IllegalArgumentException("Format invalide pour 'sphere'. Attendu : sphere <x> <y> <z> <radius>");
+            throw new IllegalArgumentException("Invalid format for 'sphere'. Expected: sphere <x> <y> <z> <radius>");
         }
         double centerX = Double.parseDouble(line[1]);
         double centerY = Double.parseDouble(line[2]);
@@ -266,7 +266,7 @@ public class SceneFileParser {
         Point center = new Point(centerX, centerY, centerZ);
         double radius = Double.parseDouble(line[4]);
         if (radius <= 0) {
-            throw new IllegalArgumentException("Le rayon de la sphère doit être positif.");
+            throw new IllegalArgumentException("Sphere radius must be positive.");
         }
         Sphere sphere = new Sphere(currentDiffuse, currentSpecular, center, radius);
         scene.addShape(sphere);
