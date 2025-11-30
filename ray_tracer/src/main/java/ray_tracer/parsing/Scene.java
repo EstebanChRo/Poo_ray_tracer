@@ -2,10 +2,14 @@ package ray_tracer.parsing;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import ray_tracer.geometry.shapes.Shape;
+import ray_tracer.geometry.shapes.Sphere;
 import ray_tracer.imaging.Color;
 import ray_tracer.raytracer.AbstractLight;
+import ray_tracer.raytracer.Intersection;
+import ray_tracer.raytracer.Ray;
 
 public class Scene {
     private int width;
@@ -87,5 +91,24 @@ public class Scene {
 
     public void addShape(Shape shape) {
         this.shapes.add(shape);
+    }
+
+    public Optional<Intersection> findClosestIntersection(Ray ray) {
+        Optional<Intersection> closestIntersection = Optional.empty();
+        double minT = Double.POSITIVE_INFINITY;
+        for (Shape shape : shapes) {
+            if (shape instanceof Sphere) {
+                Sphere sphere = (Sphere) shape;
+                Optional<Intersection> currentIntersection = sphere.intersect(ray);
+                if (currentIntersection.isPresent()) {
+                    Intersection intersection = currentIntersection.get();
+                    if (intersection.getT() < minT && intersection.getT() > 0) {
+                        minT = intersection.getT();
+                        closestIntersection = currentIntersection;
+                    }
+                }
+            }
+        }
+        return closestIntersection;
     }
 }
