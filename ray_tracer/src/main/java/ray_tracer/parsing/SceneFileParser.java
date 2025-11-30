@@ -11,8 +11,8 @@ import ray_tracer.geometry.Vector;
 import ray_tracer.geometry.shapes.Sphere;
 import ray_tracer.geometry.shapes.Triangle;
 import ray_tracer.imaging.Color;
-import ray_tracer.raytracer.PointLight;
-import ray_tracer.raytracer.directionalLight;
+import ray_tracer.raytracer.Lights.PointLight;
+import ray_tracer.raytracer.Lights.directionalLight;
 
 public class SceneFileParser {
     private Scene scene;

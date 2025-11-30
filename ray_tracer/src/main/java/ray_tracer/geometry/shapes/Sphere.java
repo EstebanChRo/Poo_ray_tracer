@@ -43,6 +43,8 @@ public class Sphere extends Shape {
         this.specular = specular;
     }
 
+
+
     public Optional<Intersection> intersect(Ray ray){
         Point o = ray.getOrigin();
         Vector d = ray.getDirection();

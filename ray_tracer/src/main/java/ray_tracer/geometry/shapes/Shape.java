@@ -10,4 +10,6 @@ public abstract class Shape {
         this.diffuse = diffuse;
         this.specular = specular;
     }
+
+    //TODO : Implémenter les méthodes intersect à toutes les classes shapes.
 }
