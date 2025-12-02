@@ -4,7 +4,7 @@ import ray_tracer.parsing.Scene;
 import ray_tracer.parsing.SceneFileParser;
 
 public class main {
-    public static void main() {
+    public main() {
         SceneFileParser SceneFileParser = new SceneFileParser();
         SceneFileParser.parse("ray_tracer/src/main/scenes/jalon2/test1.scene");
         Scene scene = SceneFileParser.getScene();
