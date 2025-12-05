@@ -1,4 +1,4 @@
-package ray_tracer.raytracer;
+package ray_tracer.raytracer.Lights;
 
 import ray_tracer.geometry.Point;
 import ray_tracer.imaging.Color;

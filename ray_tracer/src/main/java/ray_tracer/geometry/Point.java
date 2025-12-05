@@ -14,12 +14,12 @@ public class Point extends AbstractVec3 {
         return new Point(this.x + v.x, this.y + v.y, this.z + v.z);
     }
 
-    public Point subtract (AbstractVec3 other){
+    public Vector subtract (AbstractVec3 other){
         if (!(other instanceof Point)) {
             throw new IllegalArgumentException("A Point can only be subtracted from another Point.");
         }
         Point p = (Point) other;
-        return new Point(this.x - p.x, this.y - p.y, this.z - p.z);
+        return new Vector(this.x - p.x, this.y - p.y, this.z - p.z);
     }
 
     public Point multiplyByScalar(double scalar){

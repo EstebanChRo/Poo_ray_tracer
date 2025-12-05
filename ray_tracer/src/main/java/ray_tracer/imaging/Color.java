@@ -48,7 +48,7 @@ public class Color extends AbstractVec3 {
         );
     }
 
-    public Color produitDeSchur(Color other){
+    public Color schurProduct(Color other){
         if (other == null) {
             throw new IllegalArgumentException("The argument cannot be null.");
         }
