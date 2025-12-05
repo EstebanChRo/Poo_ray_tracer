@@ -11,5 +11,5 @@ public abstract class Shape {
         this.specular = specular;
     }
 
-    //TODO : Implémenter les méthodes intersect à toutes les classes shapes.
+    //TODO : Jalon-6 Implémenter les méthodes intersect (avec vecteur normale) à toutes les classes shapes.
 }

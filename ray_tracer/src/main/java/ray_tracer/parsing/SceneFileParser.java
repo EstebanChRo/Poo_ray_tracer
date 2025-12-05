@@ -8,11 +8,12 @@ import java.util.List;
 
 import ray_tracer.geometry.Point;
 import ray_tracer.geometry.Vector;
+import ray_tracer.geometry.shapes.Plane;
 import ray_tracer.geometry.shapes.Sphere;
 import ray_tracer.geometry.shapes.Triangle;
 import ray_tracer.imaging.Color;
 import ray_tracer.raytracer.Lights.PointLight;
-import ray_tracer.raytracer.Lights.directionalLight;
+import ray_tracer.raytracer.Lights.DirectionalLight;
 
 public class SceneFileParser {
     private Scene scene;
@@ -89,6 +90,8 @@ public class SceneFileParser {
                     case "sphere":
                         parseShpere(parts);
                         break;
+                    case "plane":
+                        parsePlane(parts);
                     default:
                         throw new IllegalArgumentException("Unknown line in scene file: " + parts[0]);
                 }
@@ -174,7 +177,7 @@ public class SceneFileParser {
             throw new IllegalArgumentException("RGB components of directional light must be between 0 and 1.");
         }
         Color color = new Color(colorR, colorG, colorB);
-        directionalLight directionalLight =  new directionalLight(color, direction);
+        DirectionalLight directionalLight =  new DirectionalLight(color, direction);
         scene.addLight(directionalLight);
     }
 
@@ -253,6 +256,23 @@ public class SceneFileParser {
         int c = Integer.parseInt(parts[3]);
         Triangle triangle = new Triangle(currentDiffuse, currentSpecular, vertices.get(a), vertices.get(b), vertices.get(c));
         scene.addShape(triangle);
+    }
+
+    private void parsePlane(String[] line){
+        if (line.length < 7) {
+            throw new IllegalArgumentException("Invalid format for 'plane'. Expected: plane <x> <y> <z> <u> <v> <w>");
+        }
+        int x = Integer.parseInt(line[1]);
+        int y = Integer.parseInt(line[2]);
+        int z = Integer.parseInt(line[3]);
+        Point point = new Point(x, y, z);
+
+        int u = Integer.parseInt(line[4]);
+        int v = Integer.parseInt(line[5]);
+        int w = Integer.parseInt(line[6]);
+        Vector normal = new Vector(u, v, w);
+        Plane plane = new Plane(currentDiffuse, currentSpecular, point, normal);
+        scene.addShape(plane);
     }
 
     private void parseShpere(String[] line){

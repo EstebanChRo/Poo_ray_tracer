@@ -22,6 +22,15 @@ public class RayTracer {
         return d;
     }
 
+
+    /*
+TODO : Jalon-4 : Étape 4 : Mettre à jour RayTracer
+
+Objectif : Utiliser la nouvelle logique de calcul de couleur.
+Modifier getColor :
+    Si aucune intersection, retourner du noir.
+    Sinon, appeler scene.calculateFinalColor(intersection) et retourner le résultat.
+    */
     public Color getColor(Intersection intersection, Scene scene){
         return scene.getAmbient();
     }

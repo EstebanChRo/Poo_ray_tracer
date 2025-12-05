@@ -22,7 +22,6 @@ public class Scene {
     private List<Shape> shapes = new ArrayList<>();
 
     public Scene() {
-        // Valeurs pas défaut
         this.width = 0;
         this.height = 0;
         this.output = "output.png";
@@ -95,7 +94,10 @@ public class Scene {
 
 
 
-    //TODO : Ajouter les autres shapes
+    //TODO : Jalon-6 Ajouter les autres shapes
+
+
+    // TODO : Jalon-4 : Étape 3 : S’assurer que l’Intersection retournée contient bien la normale.
     public Optional<Intersection> findClosestIntersection(Ray ray) {
         Optional<Intersection> closestIntersection = Optional.empty();
         double minT = Double.POSITIVE_INFINITY;
@@ -114,7 +116,6 @@ public class Scene {
                 }
             }
         }
-
         return closestIntersection;
     }
 }
