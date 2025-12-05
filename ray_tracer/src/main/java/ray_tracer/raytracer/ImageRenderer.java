@@ -26,10 +26,7 @@ public class ImageRenderer {
                 Color pixelColor = new Color(); // constructeur qui donne un pixel noir
                 if (intersection.isPresent()) {
                     pixelColor = raytracer.getColor(intersection.get(), scene);
-                } else {
-                    continue;
                 }
-
                 image.setRGB(i, scene.getHeight() - 1 - j, pixelColor.toRGB());
             }
         }

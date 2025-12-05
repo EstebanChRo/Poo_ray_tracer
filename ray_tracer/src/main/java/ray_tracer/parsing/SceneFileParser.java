@@ -44,7 +44,6 @@ public class SceneFileParser {
     }
 
     public Scene parse(String filePath) {
-        Scene scene = new Scene();
         try (FileReader file = new FileReader(filePath)){
             BufferedReader br = new BufferedReader(file);
             String line;
