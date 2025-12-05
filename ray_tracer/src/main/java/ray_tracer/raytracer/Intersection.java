@@ -14,13 +14,13 @@ public class Intersection {
     private Point point;
     private double t;
     private Shape shape;
-    private Vector normale;
+    private Vector normal;
 
-    public Intersection(Point point, double t, Shape shape, Vector normale) {
+    public Intersection(Point point, double t, Shape shape, Vector normal) {
         this.point = point;
         this.t = t;
         this.shape = shape;
-        this.normale = normale;
+        this.normal = normal;
     }
 
     public Point getPoint() {
@@ -35,29 +35,21 @@ public class Intersection {
         return shape;
     }
 
-    public Vector getNormale() {
-        return normale;
+    public Vector getnormal() {
+        return normal;
     }
 
     public Color calculateDiffuseColor(AbstractLight light){
-        Color diffuse_color = new Color();
+        Vector lightdir;
         if (light instanceof PointLight) {
-        
+            PointLight point_light = (PointLight) light;
+            lightdir = point_light.getOrigin().subtract(this.point).normalize();
         } else if (light instanceof DirectionalLight) {
-        // Calcul pour DirectionalLight
+            DirectionalLight directional_light = (DirectionalLight) light;
+            lightdir = directional_light.getDirection().normalize();
+        } else {
+            throw new IllegalArgumentException("Type de lumière non supporté : " + light.getClass());
         }
-
-        return diffuse_color;
+        return light.getColor().multiply(this.shape.getDiffuse()).multiplyByScalar(Math.max(normal.dotProduct(lightdir), 0));
     }
-/*
-TODO : Jalon-4 Étape 2 :
-Calculer la diffusion de Lambert ld = max(n ⋅ lightdir, 0) ∗ lightcolor ∗ colordiffuse
-Ajouter une méthode :
-    - calculateDiffuseColor(AbstractLight light) :
-        - Calculer la direction de la lumière depuis le point d’intersection (lightDir).
-        - Calculer le produit scalaire entre la normale et lightDir : max(n · lightDir, 0).
-        - Multiplier ce scalaire par la couleur de la lumière et la couleur diffuse de l’objet :
-        - couleur_diffuse = max(n · lightDir, 0) × couleur_lumière × couleur_diffuse_objet.
-        - Retourner couleur_diffuse.
-*/ 
 }

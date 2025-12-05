@@ -61,8 +61,8 @@ public class Sphere extends Shape {
         else if (delta == 0) {
             double t = -b / (2*a);
             Point intersection_point = o.add(d.multiplyByScalar(t));
-            Vector normale = intersection_point.subtract(this.center).normalize();
-            Intersection intersection = new Intersection(intersection_point, t, this, normale);
+            Vector normal = intersection_point.subtract(this.center).normalize();
+            Intersection intersection = new Intersection(intersection_point, t, this, normal);
             return Optional.of(intersection);
         }
 
@@ -78,8 +78,8 @@ public class Sphere extends Shape {
                 }
             }
             Point intersection_point = o.add(d.multiplyByScalar(t));
-            Vector normale = intersection_point.subtract(this.center).normalize();
-            Intersection intersection = new Intersection(intersection_point, t, this,normale);
+            Vector normal = intersection_point.subtract(this.center).normalize();
+            Intersection intersection = new Intersection(intersection_point, t, this,normal);
             return Optional.of(intersection);
         }
     }
