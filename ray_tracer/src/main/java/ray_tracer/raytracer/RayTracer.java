@@ -1,6 +1,8 @@
 package ray_tracer.raytracer;
 
 
+import java.util.Optional;
+
 import ray_tracer.geometry.Orthonormal;
 import ray_tracer.geometry.Vector;
 import ray_tracer.imaging.Color;
@@ -23,15 +25,12 @@ public class RayTracer {
     }
 
 
-    /*
-TODO : Jalon-4 : Étape 4 : Mettre à jour RayTracer
-
-Objectif : Utiliser la nouvelle logique de calcul de couleur.
-Modifier getColor :
-    Si aucune intersection, retourner du noir.
-    Sinon, appeler scene.calculateFinalColor(intersection) et retourner le résultat.
-    */
-    public Color getColor(Intersection intersection, Scene scene){
-        return scene.getAmbient();
+    public Color getColor(Optional<Intersection> intersection, Scene scene){
+        if (intersection.isPresent()) {
+            return scene.calculateFinalColor(intersection.get());
+        }
+        else {
+            return new Color();
+        }
     }
 }

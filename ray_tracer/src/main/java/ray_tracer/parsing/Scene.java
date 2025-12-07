@@ -97,7 +97,6 @@ public class Scene {
     //TODO : Jalon-6 Ajouter les autres shapes
 
 
-    // TODO : Jalon-4 : Étape 3 : S’assurer que l’Intersection retournée contient bien la normale.
     public Optional<Intersection> findClosestIntersection(Ray ray) {
         Optional<Intersection> closestIntersection = Optional.empty();
         double minT = Double.POSITIVE_INFINITY;
@@ -117,5 +116,14 @@ public class Scene {
             }
         }
         return closestIntersection;
+    }
+
+    public Color calculateFinalColor(Intersection intersection){
+        Color finalColor = ambient;
+        for (AbstractLight light : this.lights){
+            Color diffuse_color = intersection.calculateDiffuseColor(light);
+            finalColor = finalColor.add(diffuse_color);
+        }
+            return finalColor;
     }
 }
