@@ -8,7 +8,7 @@ import ray_tracer.geometry.shapes.Shape;
 import ray_tracer.imaging.Color;
 import ray_tracer.raytracer.Lights.AbstractLight;
 import ray_tracer.raytracer.Lights.PointLight;
-import ray_tracer.raytracer.Lights.directionalLight;
+import ray_tracer.raytracer.Lights.DirectionalLight;
 
 public class Intersection {
     private Point point;
@@ -44,8 +44,8 @@ public class Intersection {
         if (light instanceof PointLight) {
             PointLight point_light = (PointLight) light;
             lightdir = point_light.getOrigin().subtract(this.point).normalize();
-        } else if (light instanceof directionalLight) {
-            directionalLight directional_light = (directionalLight) light;
+        } else if (light instanceof DirectionalLight) {
+            DirectionalLight directional_light = (DirectionalLight) light;
             lightdir = directional_light.getDirection().normalize();
         } else {
             throw new IllegalArgumentException("Type de lumière non supporté : " + light.getClass());

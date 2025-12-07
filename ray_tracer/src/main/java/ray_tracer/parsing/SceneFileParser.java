@@ -13,20 +13,20 @@ import ray_tracer.geometry.shapes.Sphere;
 import ray_tracer.geometry.shapes.Triangle;
 import ray_tracer.imaging.Color;
 import ray_tracer.raytracer.Lights.PointLight;
-import ray_tracer.raytracer.Lights.directionalLight;
+import ray_tracer.raytracer.Lights.DirectionalLight;
 
 public class SceneFileParser {
     private Scene scene;
     private Color currentDiffuse;
     private Color currentSpecular;
-    private Color currentShininess;
+    private double currentShininess;
     private List<Point> vertices = new ArrayList<>();
 
     public SceneFileParser() {
         this.scene = new Scene();
         this.currentDiffuse = new Color();
         this.currentSpecular = new Color();
-        this.currentShininess = new Color();
+        this.currentShininess = 0.0;
         this.vertices = new ArrayList<>();
     }
 
@@ -42,7 +42,7 @@ public class SceneFileParser {
         return currentSpecular;
     }
 
-    public Color getCurrentShininess() {
+    public double getCurrentShininess() {
         return currentShininess;
     }
 
@@ -186,7 +186,7 @@ public class SceneFileParser {
             throw new IllegalArgumentException("RGB components of directional light must be between 0 and 1.");
         }
         Color color = new Color(colorR, colorG, colorB);
-        directionalLight directionalLight =  new directionalLight(color, direction);
+        DirectionalLight directionalLight =  new DirectionalLight(color, direction);
         scene.addLight(directionalLight);
     }
 
@@ -241,21 +241,20 @@ public class SceneFileParser {
         if (line.length < 2) {
             throw new IllegalArgumentException("Invalid format for 'shininess'. Expected: shininess <value>");
         }
-        double shininessValue = Double.parseDouble(line[1]);
-        if (shininessValue < 0) {
-            throw new IllegalArgumentException("Shininess value must be non-negative.");
-        }
-        Color shininess = new Color(shininessValue, shininessValue, shininessValue);
+        double shininess = Double.parseDouble(line[1]);
+//        if (shininess < 0) {
+//            throw new IllegalArgumentException("Shininess value must be non-negative.");
+//        }
         this.currentShininess = shininess;
     }
 
-    private void parseMaxverts(String[] line){
-        if (line.length < 2) {
-            throw new IllegalArgumentException("Invalid format for 'maxverts'. Expected: maxverts <number>");
-        }
-        int maxverts = Integer.parseInt(line[1]);
-        // à implémenter plus tard si besoin
-    }
+//    private void parseMaxverts(String[] line){
+//        if (line.length < 2) {
+//            throw new IllegalArgumentException("Invalid format for 'maxverts'. Expected: maxverts <number>");
+//        }
+//        int maxverts = Integer.parseInt(line[1]);
+//        // à implémenter plus tard si besoin
+//    }
 
     private void parseVertex(String[] line){
         if (line.length < 4) {

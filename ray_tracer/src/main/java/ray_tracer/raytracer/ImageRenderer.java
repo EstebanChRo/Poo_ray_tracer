@@ -18,10 +18,10 @@ public class ImageRenderer {
 
         for (int i = 0; i < scene.getWidth(); i++) {
             for (int j = 0; j < scene.getHeight(); j++) {
-                Vector d = raytracer.directionCalcul(i, j, basis, scene); // calculer le vecteur unitaire d qui représente un rayon allant de l'oeil/camera au centre du pixel (i,j)
+                Vector d = raytracer.directionCalcul(i, j, basis, scene); 
                 Ray ray = new Ray(scene.getCamera().getLookFrom(), d);
 
-                Optional<Intersection> intersection = scene.findClosestIntersection(ray); // rechercher le point d'intersection p le plus proche avec un objet de la scène
+                Optional<Intersection> intersection = scene.findClosestIntersection(ray); 
 
                 Color pixelColor = raytracer.getColor(intersection, scene);
                 image.setRGB(i, scene.getHeight() - 1 - j, pixelColor.toRGB());

@@ -25,12 +25,15 @@ public class RayTracer {
     }
 
 
-    public Color getColor(Optional<Intersection> intersection, Scene scene){
+    public Color getColor(Optional<Intersection> intersection, Scene scene) {
         if (intersection.isPresent()) {
-            return scene.calculateFinalColor(intersection.get());
-        }
-        else {
+            Vector eyeDir = scene.getCamera().getLookFrom()
+                .subtract(intersection.get().getPoint())
+                .normalize();
+            return scene.calculateFinalColor(intersection.get(), eyeDir);
+        } else {
             return new Color();
         }
-    }
+}
+
 }

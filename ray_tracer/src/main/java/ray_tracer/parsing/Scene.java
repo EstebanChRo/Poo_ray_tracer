@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import ray_tracer.geometry.Vector;
 import ray_tracer.geometry.shapes.Shape;
 import ray_tracer.geometry.shapes.Sphere;
 import ray_tracer.imaging.Color;
 import ray_tracer.raytracer.Intersection;
 import ray_tracer.raytracer.Ray;
 import ray_tracer.raytracer.Lights.AbstractLight;
+import ray_tracer.raytracer.Lights.PointLight;
+import ray_tracer.raytracer.Lights.DirectionalLight;
 
 public class Scene {
     private int width;
@@ -118,12 +121,68 @@ public class Scene {
         return closestIntersection;
     }
 
-    public Color calculateFinalColor(Intersection intersection){
-        Color finalColor = ambient;
-        for (AbstractLight light : this.lights){
-            Color diffuse_color = intersection.calculateDiffuseColor(light);
-            finalColor = finalColor.add(diffuse_color);
+    public Color calculatePhongIllumination(Intersection intersection, AbstractLight light, Vector eyeDir){
+        Vector lightdir;
+        if (light instanceof PointLight) {
+            PointLight point_light = (PointLight) light;
+            lightdir = point_light.getOrigin().subtract(intersection.getPoint()).normalize();
+        } else if (light instanceof DirectionalLight) {
+            DirectionalLight directional_light = (DirectionalLight) light;
+            lightdir = directional_light.getDirection().normalize();
+        } else {
+            throw new IllegalArgumentException("Type de lumière non supporté : " + light.getClass());
         }
-            return finalColor;
+
+        Vector h = lightdir.add(eyeDir).normalize();
+        double nDotH = intersection.getnormal().dotProduct(h);
+        nDotH = Math.max(nDotH, 0);
+        double shininess = intersection.getShape().getShininess();
+        double specularFactor = Math.pow(nDotH, shininess);
+        Color phongColor = light.getColor().multiply(intersection.getShape().getSpecular()).multiplyByScalar(specularFactor);
+        
+        return phongColor;
+    }
+
+    public Color calculateFinalColor(Intersection intersection, Vector eyeDir) {
+        Color finalColor = this.ambient;
+
+        for (AbstractLight light : this.lights) {
+            Vector lightDir;
+            if (light instanceof PointLight) {
+                PointLight pointLight = (PointLight) light;
+                lightDir = pointLight.getOrigin().subtract(intersection.getPoint()).normalize();
+            } else if (light instanceof DirectionalLight) {
+                DirectionalLight directionalLight = (DirectionalLight) light;
+                lightDir = directionalLight.getDirection().normalize().multiplyByScalar(-1);
+            } else {
+                throw new IllegalArgumentException("Type de lumière non supporté : " + light.getClass());
+            }
+
+            final double epsilon = 1e-6;
+            Color diffuseColor = intersection.calculateDiffuseColor(light);
+            Color specularColor = calculatePhongIllumination(intersection, light, eyeDir);
+            Vector originOffset = intersection.getnormal().multiplyByScalar(epsilon);
+            Ray shadowRay = new Ray(intersection.getPoint().add(originOffset), lightDir);
+            Optional<Intersection> shadowIntersection = findClosestIntersection(shadowRay);
+            boolean blocked = false;
+            if (shadowIntersection.isPresent()) {
+                double t = shadowIntersection.get().getT();
+                if (light instanceof PointLight) {
+                    PointLight pl = (PointLight) light;
+                    double distToLight = pl.getOrigin().subtract(shadowRay.getOrigin()).length();
+                    if (t > epsilon && t < distToLight - epsilon) {
+                        blocked = true;
+                    }
+                } else {
+                    if (t > epsilon) {
+                        blocked = true;
+                    }
+                }
+            }
+            if (!blocked) {
+                finalColor = finalColor.add(diffuseColor).add(specularColor);
+            }
+        }
+        return finalColor;
     }
 }
