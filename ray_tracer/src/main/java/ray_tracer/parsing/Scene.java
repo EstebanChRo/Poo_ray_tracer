@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import ray_tracer.geometry.Point;
+import ray_tracer.geometry.Vector;
 import ray_tracer.geometry.shapes.Shape;
 import ray_tracer.geometry.shapes.Sphere;
 import ray_tracer.imaging.Color;
 import ray_tracer.raytracer.Intersection;
 import ray_tracer.raytracer.Ray;
 import ray_tracer.raytracer.Lights.AbstractLight;
+import ray_tracer.raytracer.Lights.PointLight;
+import ray_tracer.raytracer.Lights.directionalLight;
 
 public class Scene {
     private int width;
@@ -118,6 +122,28 @@ public class Scene {
         return closestIntersection;
     }
 
+    public Color calculatePhongIllumination(Intersection intersection, AbstractLight light, Vector eyeDir){
+        Vector lightdir;
+        if (light instanceof PointLight) {
+            PointLight point_light = (PointLight) light;
+            lightdir = point_light.getOrigin().subtract(intersection.getPoint()).normalize();
+        } else if (light instanceof directionalLight) {
+            directionalLight directional_light = (directionalLight) light;
+            lightdir = directional_light.getDirection().normalize();
+        } else {
+            throw new IllegalArgumentException("Type de lumière non supporté : " + light.getClass());
+        }
+
+        Vector h = lightdir.add(eyeDir).normalize();
+        double nDotH = intersection.getnormal().dotProduct(h);
+        nDotH = Math.max(nDotH, 0);
+        double shininess = intersection.getShape().getShininess();
+        double specularFactor = Math.pow(nDotH, shininess);
+        Color phongColor = light.getColor().multiply(intersection.getShape().getSpecular()).multiplyByScalar(specularFactor);
+        
+        return phongColor;
+    }
+
     public Color calculateFinalColor(Intersection intersection){
         Color finalColor = ambient;
         for (AbstractLight light : this.lights){
@@ -126,4 +152,6 @@ public class Scene {
         }
             return finalColor;
     }
+
+
 }

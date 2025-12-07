@@ -19,14 +19,14 @@ public class SceneFileParser {
     private Scene scene;
     private Color currentDiffuse;
     private Color currentSpecular;
-    private Color currentShininess;
+    private double currentShininess;
     private List<Point> vertices = new ArrayList<>();
 
     public SceneFileParser() {
         this.scene = new Scene();
         this.currentDiffuse = new Color();
         this.currentSpecular = new Color();
-        this.currentShininess = new Color();
+        this.currentShininess = 0.0;
         this.vertices = new ArrayList<>();
     }
 
@@ -42,7 +42,7 @@ public class SceneFileParser {
         return currentSpecular;
     }
 
-    public Color getCurrentShininess() {
+    public double getCurrentShininess() {
         return currentShininess;
     }
 
@@ -241,11 +241,10 @@ public class SceneFileParser {
         if (line.length < 2) {
             throw new IllegalArgumentException("Invalid format for 'shininess'. Expected: shininess <value>");
         }
-        double shininessValue = Double.parseDouble(line[1]);
-        if (shininessValue < 0) {
+        double shininess = Double.parseDouble(line[1]);
+        if (shininess < 0) {
             throw new IllegalArgumentException("Shininess value must be non-negative.");
         }
-        Color shininess = new Color(shininessValue, shininessValue, shininessValue);
         this.currentShininess = shininess;
     }
 

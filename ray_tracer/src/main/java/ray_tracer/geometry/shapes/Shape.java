@@ -5,9 +5,9 @@ import ray_tracer.imaging.Color;
 public abstract class Shape {
     protected Color diffuse;
     protected Color specular;
-    protected Color shininess;
+    protected double shininess;
 
-    public Shape(Color diffuse, Color specular, Color shininess) {
+    public Shape(Color diffuse, Color specular, double shininess) {
         this.diffuse = diffuse;
         this.specular = specular;
         this.shininess = shininess;
@@ -21,7 +21,7 @@ public abstract class Shape {
         return specular;
     }
 
-    public Color getShininess() {
+    public double getShininess() {
         return shininess;
     }
 
