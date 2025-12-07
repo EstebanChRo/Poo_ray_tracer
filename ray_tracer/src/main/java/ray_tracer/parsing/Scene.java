@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import ray_tracer.geometry.Point;
 import ray_tracer.geometry.Vector;
 import ray_tracer.geometry.shapes.Shape;
 import ray_tracer.geometry.shapes.Sphere;
@@ -159,11 +158,28 @@ public class Scene {
                 throw new IllegalArgumentException("Type de lumière non supporté : " + light.getClass());
             }
 
-            Ray shadowRay = new Ray(intersection.getPoint(), lightDir);
+            final double epsilon = 1e-6;
+            Color diffuseColor = intersection.calculateDiffuseColor(light);
+            Color specularColor = calculatePhongIllumination(intersection, light, eyeDir);
+            Vector originOffset = intersection.getnormal().multiplyByScalar(epsilon);
+            Ray shadowRay = new Ray(intersection.getPoint().add(originOffset), lightDir);
             Optional<Intersection> shadowIntersection = findClosestIntersection(shadowRay);
-            if (!shadowIntersection.isPresent() || shadowIntersection.get().getT() <= 1e-9) {
-                Color diffuseColor = intersection.calculateDiffuseColor(light);
-                Color specularColor = calculatePhongIllumination(intersection, light, eyeDir);
+            boolean blocked = false;
+            if (shadowIntersection.isPresent()) {
+                double t = shadowIntersection.get().getT();
+                if (light instanceof PointLight) {
+                    PointLight pl = (PointLight) light;
+                    double distToLight = pl.getOrigin().subtract(shadowRay.getOrigin()).length();
+                    if (t > epsilon && t < distToLight - epsilon) {
+                        blocked = true;
+                    }
+                } else {
+                    if (t > epsilon) {
+                        blocked = true;
+                    }
+                }
+            }
+            if (!blocked) {
                 finalColor = finalColor.add(diffuseColor).add(specularColor);
             }
         }

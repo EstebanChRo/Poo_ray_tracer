@@ -248,13 +248,13 @@ public class SceneFileParser {
         this.currentShininess = shininess;
     }
 
-    private void parseMaxverts(String[] line){
-        if (line.length < 2) {
-            throw new IllegalArgumentException("Invalid format for 'maxverts'. Expected: maxverts <number>");
-        }
-        int maxverts = Integer.parseInt(line[1]);
-        // à implémenter plus tard si besoin
-    }
+//    private void parseMaxverts(String[] line){
+//        if (line.length < 2) {
+//            throw new IllegalArgumentException("Invalid format for 'maxverts'. Expected: maxverts <number>");
+//        }
+//        int maxverts = Integer.parseInt(line[1]);
+//        // à implémenter plus tard si besoin
+//    }
 
     private void parseVertex(String[] line){
         if (line.length < 4) {
