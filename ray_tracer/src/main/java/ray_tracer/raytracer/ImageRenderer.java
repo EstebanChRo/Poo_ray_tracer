@@ -23,10 +23,7 @@ public class ImageRenderer {
 
                 Optional<Intersection> intersection = scene.findClosestIntersection(ray); // rechercher le point d'intersection p le plus proche avec un objet de la scène
 
-                Color pixelColor = new Color(); // constructeur qui donne un pixel noir
-                if (intersection.isPresent()) {
-                    pixelColor = raytracer.getColor(intersection.get(), scene);
-                }
+                Color pixelColor = raytracer.getColor(intersection, scene);
                 image.setRGB(i, scene.getHeight() - 1 - j, pixelColor.toRGB());
             }
         }

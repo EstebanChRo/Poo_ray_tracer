@@ -52,7 +52,6 @@ public class Sphere extends Shape {
         double a = d.dotProduct(d);
         double b = o.subtract(this.center).dotProduct(d)*2;
         double c = o.subtract(this.center).dotProduct(o.subtract(this.center)) - this.radius*this.radius;
-
         double delta = b * b - 4 * a * c;
 
         if (delta < 0) {
@@ -62,7 +61,8 @@ public class Sphere extends Shape {
         else if (delta == 0) {
             double t = -b / (2*a);
             Point intersection_point = o.add(d.multiplyByScalar(t));
-            Intersection intersection = new Intersection(intersection_point, t, this);
+            Vector normal = intersection_point.subtract(this.center).normalize();
+            Intersection intersection = new Intersection(intersection_point, t, this, normal);
             return Optional.of(intersection);
         }
 
@@ -78,7 +78,8 @@ public class Sphere extends Shape {
                 }
             }
             Point intersection_point = o.add(d.multiplyByScalar(t));
-            Intersection intersection = new Intersection(intersection_point, t, this);
+            Vector normal = intersection_point.subtract(this.center).normalize();
+            Intersection intersection = new Intersection(intersection_point, t, this,normal);
             return Optional.of(intersection);
         }
     }

@@ -10,7 +10,7 @@ import ray_tracer.raytracer.ImageWriter;
 
 public class main {
     public static void main(String[] args) throws IOException {
-        Scene scene = new SceneFileParser().parse("ray_tracer/src/main/scenes/jalon3/tp3.test");
+        Scene scene = new SceneFileParser().parse("ray_tracer/src/main/scenes/jalon4/tp45.test");
         ImageRenderer renderer = new ImageRenderer();
         BufferedImage image = renderer.render(scene);
         ImageWriter writer = new ImageWriter();

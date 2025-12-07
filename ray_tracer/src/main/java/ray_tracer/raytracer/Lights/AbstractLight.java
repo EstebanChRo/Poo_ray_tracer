@@ -10,4 +10,9 @@ public abstract class AbstractLight {
         this.color = color;
     }
 
+    public Color getColor() {
+        return color;
+    }
+
+    
 }

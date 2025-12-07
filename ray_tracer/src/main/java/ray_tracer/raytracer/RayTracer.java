@@ -1,6 +1,8 @@
 package ray_tracer.raytracer;
 
 
+import java.util.Optional;
+
 import ray_tracer.geometry.Orthonormal;
 import ray_tracer.geometry.Vector;
 import ray_tracer.imaging.Color;
@@ -22,7 +24,13 @@ public class RayTracer {
         return d;
     }
 
-    public Color getColor(Intersection intersection, Scene scene){
-        return scene.getAmbient();
+
+    public Color getColor(Optional<Intersection> intersection, Scene scene){
+        if (intersection.isPresent()) {
+            return scene.calculateFinalColor(intersection.get());
+        }
+        else {
+            return new Color();
+        }
     }
 }

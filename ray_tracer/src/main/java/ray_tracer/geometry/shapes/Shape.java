@@ -11,5 +11,13 @@ public abstract class Shape {
         this.specular = specular;
     }
 
-    //TODO : Implémenter les méthodes intersect à toutes les classes shapes.
+    public Color getDiffuse() {
+        return diffuse;
+    }
+
+    public Color getSpecular() {
+        return specular;
+    }
+
+    //TODO : Jalon-6 Implémenter les méthodes intersect (avec vecteur normal) à toutes les classes shapes.
 }

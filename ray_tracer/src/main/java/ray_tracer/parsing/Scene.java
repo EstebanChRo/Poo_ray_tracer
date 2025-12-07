@@ -22,7 +22,6 @@ public class Scene {
     private List<Shape> shapes = new ArrayList<>();
 
     public Scene() {
-        // Valeurs pas défaut
         this.width = 0;
         this.height = 0;
         this.output = "output.png";
@@ -95,7 +94,9 @@ public class Scene {
 
 
 
-    //TODO : Ajouter les autres shapes
+    //TODO : Jalon-6 Ajouter les autres shapes
+
+
     public Optional<Intersection> findClosestIntersection(Ray ray) {
         Optional<Intersection> closestIntersection = Optional.empty();
         double minT = Double.POSITIVE_INFINITY;
@@ -114,7 +115,15 @@ public class Scene {
                 }
             }
         }
-
         return closestIntersection;
+    }
+
+    public Color calculateFinalColor(Intersection intersection){
+        Color finalColor = ambient;
+        for (AbstractLight light : this.lights){
+            Color diffuse_color = intersection.calculateDiffuseColor(light);
+            finalColor = finalColor.add(diffuse_color);
+        }
+            return finalColor;
     }
 }

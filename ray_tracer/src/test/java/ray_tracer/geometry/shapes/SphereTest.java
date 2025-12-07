@@ -24,6 +24,11 @@ public class SphereTest {
     }
 
     @Test
+    void testIntersect() {
+
+    }
+
+    @Test
     void testSetCenter() {
 
     }

@@ -55,6 +55,13 @@ public class Color extends AbstractVec3 {
         return new Color(this.x * other.x, this.y * other.y, this.z * other.z);
     }
 
+        public Color multiply(Color other) {
+        double newR = this.x * other.x;
+        double newG = this.y * other.y;
+        double newB = this.z * other.z;
+        return new Color(newR, newG, newB);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
