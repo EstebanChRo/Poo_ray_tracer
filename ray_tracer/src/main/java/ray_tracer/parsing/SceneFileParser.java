@@ -13,7 +13,7 @@ import ray_tracer.geometry.shapes.Sphere;
 import ray_tracer.geometry.shapes.Triangle;
 import ray_tracer.imaging.Color;
 import ray_tracer.raytracer.Lights.PointLight;
-import ray_tracer.raytracer.Lights.directionalLight;
+import ray_tracer.raytracer.Lights.DirectionalLight;
 
 public class SceneFileParser {
     private Scene scene;
@@ -186,7 +186,7 @@ public class SceneFileParser {
             throw new IllegalArgumentException("RGB components of directional light must be between 0 and 1.");
         }
         Color color = new Color(colorR, colorG, colorB);
-        directionalLight directionalLight =  new directionalLight(color, direction);
+        DirectionalLight directionalLight =  new DirectionalLight(color, direction);
         scene.addLight(directionalLight);
     }
 
@@ -242,9 +242,9 @@ public class SceneFileParser {
             throw new IllegalArgumentException("Invalid format for 'shininess'. Expected: shininess <value>");
         }
         double shininess = Double.parseDouble(line[1]);
-        if (shininess < 0) {
-            throw new IllegalArgumentException("Shininess value must be non-negative.");
-        }
+//        if (shininess < 0) {
+//            throw new IllegalArgumentException("Shininess value must be non-negative.");
+//        }
         this.currentShininess = shininess;
     }
 

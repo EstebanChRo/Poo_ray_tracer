@@ -13,7 +13,7 @@ import ray_tracer.raytracer.Intersection;
 import ray_tracer.raytracer.Ray;
 import ray_tracer.raytracer.Lights.AbstractLight;
 import ray_tracer.raytracer.Lights.PointLight;
-import ray_tracer.raytracer.Lights.directionalLight;
+import ray_tracer.raytracer.Lights.DirectionalLight;
 
 public class Scene {
     private int width;
@@ -127,8 +127,8 @@ public class Scene {
         if (light instanceof PointLight) {
             PointLight point_light = (PointLight) light;
             lightdir = point_light.getOrigin().subtract(intersection.getPoint()).normalize();
-        } else if (light instanceof directionalLight) {
-            directionalLight directional_light = (directionalLight) light;
+        } else if (light instanceof DirectionalLight) {
+            DirectionalLight directional_light = (DirectionalLight) light;
             lightdir = directional_light.getDirection().normalize();
         } else {
             throw new IllegalArgumentException("Type de lumière non supporté : " + light.getClass());
@@ -144,14 +144,29 @@ public class Scene {
         return phongColor;
     }
 
-    public Color calculateFinalColor(Intersection intersection){
-        Color finalColor = ambient;
-        for (AbstractLight light : this.lights){
-            Color diffuse_color = intersection.calculateDiffuseColor(light);
-            finalColor = finalColor.add(diffuse_color);
+    public Color calculateFinalColor(Intersection intersection, Vector eyeDir) {
+        Color finalColor = this.ambient;
+
+        for (AbstractLight light : this.lights) {
+            Vector lightDir;
+            if (light instanceof PointLight) {
+                PointLight pointLight = (PointLight) light;
+                lightDir = pointLight.getOrigin().subtract(intersection.getPoint()).normalize();
+            } else if (light instanceof DirectionalLight) {
+                DirectionalLight directionalLight = (DirectionalLight) light;
+                lightDir = directionalLight.getDirection().normalize().multiplyByScalar(-1);
+            } else {
+                throw new IllegalArgumentException("Type de lumière non supporté : " + light.getClass());
+            }
+
+            Ray shadowRay = new Ray(intersection.getPoint(), lightDir);
+            Optional<Intersection> shadowIntersection = findClosestIntersection(shadowRay);
+            if (!shadowIntersection.isPresent() || shadowIntersection.get().getT() <= 1e-9) {
+                Color diffuseColor = intersection.calculateDiffuseColor(light);
+                Color specularColor = calculatePhongIllumination(intersection, light, eyeDir);
+                finalColor = finalColor.add(diffuseColor).add(specularColor);
+            }
         }
-            return finalColor;
+        return finalColor;
     }
-
-
 }
