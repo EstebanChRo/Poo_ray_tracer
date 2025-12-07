@@ -12,8 +12,8 @@ public class Sphere extends Shape {
     private Point center;
     private double radius;
     
-    public Sphere(Color diffuse, Color specular, Point center, double radius) {
-        super(diffuse, specular);
+    public Sphere(Color diffuse, Color specular,Color shininess, Point center, double radius) {
+        super(diffuse, specular, shininess);
         this.center = center;
         this.radius = radius;
     }

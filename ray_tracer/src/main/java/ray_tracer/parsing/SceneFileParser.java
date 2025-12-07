@@ -13,18 +13,20 @@ import ray_tracer.geometry.shapes.Sphere;
 import ray_tracer.geometry.shapes.Triangle;
 import ray_tracer.imaging.Color;
 import ray_tracer.raytracer.Lights.PointLight;
-import ray_tracer.raytracer.Lights.DirectionalLight;
+import ray_tracer.raytracer.Lights.directionalLight;
 
 public class SceneFileParser {
     private Scene scene;
     private Color currentDiffuse;
     private Color currentSpecular;
+    private Color currentShininess;
     private List<Point> vertices = new ArrayList<>();
 
     public SceneFileParser() {
         this.scene = new Scene();
-        this.currentDiffuse = new Color(0, 0, 0);
-        this.currentSpecular = new Color(0, 0, 0);
+        this.currentDiffuse = new Color();
+        this.currentSpecular = new Color();
+        this.currentShininess = new Color();
         this.vertices = new ArrayList<>();
     }
 
@@ -38,6 +40,10 @@ public class SceneFileParser {
 
     public Color getCurrentSpecular() {
         return currentSpecular;
+    }
+
+    public Color getCurrentShininess() {
+        return currentShininess;
     }
 
     public List<Point> getVertices() {
@@ -78,6 +84,9 @@ public class SceneFileParser {
                         break;
                     case "specular":
                         parseSpecular(parts);
+                        break;
+                    case "shininess":
+                        parseShininess(parts);
                         break;
                     case "maxverts":
                         break;
@@ -177,7 +186,7 @@ public class SceneFileParser {
             throw new IllegalArgumentException("RGB components of directional light must be between 0 and 1.");
         }
         Color color = new Color(colorR, colorG, colorB);
-        DirectionalLight directionalLight =  new DirectionalLight(color, direction);
+        directionalLight directionalLight =  new directionalLight(color, direction);
         scene.addLight(directionalLight);
     }
 
@@ -226,7 +235,19 @@ public class SceneFileParser {
         }
         Color specular = new Color(specularR, specularG, specularB);
         this.currentSpecular = specular;
-    } 
+    }
+
+    private void parseShininess(String[] line){
+        if (line.length < 2) {
+            throw new IllegalArgumentException("Invalid format for 'shininess'. Expected: shininess <value>");
+        }
+        double shininessValue = Double.parseDouble(line[1]);
+        if (shininessValue < 0) {
+            throw new IllegalArgumentException("Shininess value must be non-negative.");
+        }
+        Color shininess = new Color(shininessValue, shininessValue, shininessValue);
+        this.currentShininess = shininess;
+    }
 
     private void parseMaxverts(String[] line){
         if (line.length < 2) {
@@ -254,7 +275,7 @@ public class SceneFileParser {
         int a = Integer.parseInt(parts[1]);
         int b = Integer.parseInt(parts[2]);
         int c = Integer.parseInt(parts[3]);
-        Triangle triangle = new Triangle(currentDiffuse, currentSpecular, vertices.get(a), vertices.get(b), vertices.get(c));
+        Triangle triangle = new Triangle(currentDiffuse, currentSpecular, currentShininess, vertices.get(a), vertices.get(b), vertices.get(c));
         scene.addShape(triangle);
     }
 
@@ -271,7 +292,7 @@ public class SceneFileParser {
         int v = Integer.parseInt(line[5]);
         int w = Integer.parseInt(line[6]);
         Vector normal = new Vector(u, v, w);
-        Plane plane = new Plane(currentDiffuse, currentSpecular, point, normal);
+        Plane plane = new Plane(currentDiffuse, currentSpecular, currentShininess, point, normal);
         scene.addShape(plane);
     }
 
@@ -287,7 +308,7 @@ public class SceneFileParser {
         if (radius <= 0) {
             throw new IllegalArgumentException("Sphere radius must be positive.");
         }
-        Sphere sphere = new Sphere(currentDiffuse, currentSpecular, center, radius);
+        Sphere sphere = new Sphere(currentDiffuse, currentSpecular, currentShininess,  center, radius);
         scene.addShape(sphere);
     }
 }

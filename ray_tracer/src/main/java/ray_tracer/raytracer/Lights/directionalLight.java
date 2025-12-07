@@ -3,10 +3,10 @@ package ray_tracer.raytracer.Lights;
 import ray_tracer.geometry.Vector;
 import ray_tracer.imaging.Color;
 
-public class DirectionalLight extends AbstractLight {
+public class directionalLight extends AbstractLight {
     private Vector direction;
 
-    public DirectionalLight(Color color, Vector direction) {
+    public directionalLight(Color color, Vector direction) {
         super(color);
         this.direction = direction;
     }
